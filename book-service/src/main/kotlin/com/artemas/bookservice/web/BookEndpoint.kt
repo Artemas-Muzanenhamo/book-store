@@ -1,6 +1,7 @@
 package com.artemas.bookservice.web
 
 import com.artemas.bookservice.domain.Book
+import com.artemas.bookservice.service.BookService
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 
 @RestController
-class BookEndpoint {
+class BookEndpoint(
+    val bookService: BookService
+) {
 
     @PostMapping("/books/book", consumes = [APPLICATION_JSON_VALUE])
     @ResponseStatus(CREATED)
     fun registerBook(@RequestBody book: Book): Mono<Book> {
-        return Mono.just(book)
+        return bookService.addBook(book)
     }
 }

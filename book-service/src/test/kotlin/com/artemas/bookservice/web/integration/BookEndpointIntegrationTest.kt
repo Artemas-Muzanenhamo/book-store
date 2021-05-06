@@ -1,6 +1,7 @@
 package com.artemas.bookservice.web.integration
 
 import com.artemas.bookservice.domain.Book
+import com.artemas.bookservice.service.BookService
 import com.artemas.bookservice.web.BookEndpoint
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +15,7 @@ import reactor.core.publisher.Mono.just
 import reactor.test.StepVerifier
 
 @ExtendWith(SpringExtension::class)
-@WebFluxTest(BookEndpoint::class)
+@WebFluxTest(BookEndpoint::class, BookService::class)
 internal class BookEndpointIntegrationTest(
     @Autowired val webTestClient: WebTestClient
 ) {
