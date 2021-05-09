@@ -4,6 +4,7 @@ import com.artemas.bookservice.domain.Book
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
+import reactor.test.StepVerifier
 
 @DataMongoTest
 class BookRepositoryTest(
@@ -13,6 +14,10 @@ class BookRepositoryTest(
     @Test
     fun `Should save new book`() {
         val book = Book(43298784L, 9874L, "Newly Added Book By Arty")
-        bookRepository.save(book)
+
+        StepVerifier.create(bookRepository.save(book))
+            .expectNext(book)
+            .expectComplete()
+            .verify()
     }
 }
