@@ -9,4 +9,8 @@ class BookService {
     fun addBook(book: Book): Mono<Book> {
         return Mono.just(book)
     }
+
+    fun getBookById(bookId: Long) {
+        TODO("Not yet implemented")
+    }
 }

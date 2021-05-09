@@ -19,10 +19,10 @@ import reactor.test.StepVerifier
 internal class BookEndpointIntegrationTest(
     @Autowired val webTestClient: WebTestClient
 ) {
+    private val book = Book(4132L, 987434L, "The Great Expectations of Prime")
 
     @Test
     fun `Should Add A Book`() {
-        val book = Book(4132L, 987434L, "The Great Expectations of Prime")
 
         val result = webTestClient
             .post()
@@ -35,6 +35,24 @@ internal class BookEndpointIntegrationTest(
             .returnResult(Book::class.java)
 
         val responseBody: Flux<Book> = result.responseBody
+
+        StepVerifier.create(responseBody)
+            .expectNext(book)
+            .expectComplete()
+            .verify()
+    }
+
+    @Test
+    fun `Should Retrieve A Book Given A Book Id`() {
+        val result = webTestClient
+            .get()
+            .uri("/books/${book.id}")
+            .exchange()
+            .expectStatus()
+            .is2xxSuccessful
+            .returnResult(Book::class.java)
+
+        val responseBody = result.responseBody
 
         StepVerifier.create(responseBody)
             .expectNext(book)
