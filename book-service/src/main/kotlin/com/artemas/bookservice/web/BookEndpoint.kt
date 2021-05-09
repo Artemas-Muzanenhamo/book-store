@@ -20,7 +20,6 @@ class BookEndpoint(
 
     @GetMapping("/books/{bookId}")
     fun getBookByBookId(@PathVariable bookId: Long): Mono<Book> {
-//        return bookService.getBookById(bookId)
-        return Mono.just(Book(4132L, 987434L, "The Great Expectations of Prime"))
+        return bookService.getBookById(bookId)
     }
 }
