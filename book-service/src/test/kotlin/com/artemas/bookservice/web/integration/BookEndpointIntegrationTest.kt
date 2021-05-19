@@ -6,10 +6,9 @@ import com.artemas.bookservice.service.BookService
 import com.artemas.bookservice.web.BookEndpoint
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -21,18 +20,17 @@ import reactor.test.StepVerifier
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(BookEndpoint::class)
 @Import(BookService::class)
+@AutoConfigureDataMongo
 internal class BookEndpointIntegrationTest {
     @Autowired
     lateinit var webTestClient: WebTestClient
-    @MockBean
+    @Autowired
     lateinit var bookRepository: BookRepository
 
     private val book = Book(4132L, 987434L, "The Great Expectations of Prime")
 
     @Test
     fun `Should Add A Book`() {
-        given(bookRepository.save(book)).willReturn(just(book)) // TODO: Use Real Test DB
-
         val result = webTestClient
             .post()
             .uri("/books/book")
@@ -53,7 +51,7 @@ internal class BookEndpointIntegrationTest {
 
     @Test
     fun `Should Retrieve A Book Given A Book Id`() {
-        given(bookRepository.findById(book.id)).willReturn(just(book)) // TODO: Use Real Test DB
+        bookRepository.save(book)
 
         val result = webTestClient
             .get()
