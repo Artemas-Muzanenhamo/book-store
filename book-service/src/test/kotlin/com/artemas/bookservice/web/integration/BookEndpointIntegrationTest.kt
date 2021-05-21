@@ -4,13 +4,13 @@ import com.artemas.bookservice.domain.Book
 import com.artemas.bookservice.repository.BookRepository
 import com.artemas.bookservice.service.BookService
 import com.artemas.bookservice.web.BookEndpoint
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.context.annotation.Import
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -59,13 +59,33 @@ internal class BookEndpointIntegrationTest {
             .uri("/books/${book.id}")
             .exchange()
             .expectStatus()
-            .is2xxSuccessful
+            .isOk
             .returnResult(Book::class.java)
 
         val responseBody = result.responseBody
 
         StepVerifier.create(responseBody)
             .expectNext(book)
+            .expectComplete()
+            .verify()
+    }
+
+    @Test
+    fun `Should return a list of all books`() {
+        bookRepository.save(book).block()
+
+        val result = webTestClient
+            .get()
+            .uri("/books")
+            .exchange()
+            .expectStatus()
+            .isOk
+            .returnResult(object : ParameterizedTypeReference<List<Book>>() {})
+
+        val responseBody = result.responseBody
+
+        StepVerifier.create(responseBody)
+            .expectNext(listOf(book))
             .expectComplete()
             .verify()
     }

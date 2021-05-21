@@ -18,7 +18,7 @@ class BookEndpoint(
         return bookService.addBook(book)
     }
 
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/books/{bookId}", produces = [APPLICATION_JSON_VALUE])
     fun getBookByBookId(@PathVariable bookId: Long): Mono<Book> {
         return bookService.getBookById(bookId)
     }
