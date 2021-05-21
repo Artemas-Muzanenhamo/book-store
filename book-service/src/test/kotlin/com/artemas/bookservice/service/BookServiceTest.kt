@@ -8,6 +8,7 @@ import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono.just
 import reactor.test.StepVerifier
 
@@ -40,5 +41,15 @@ class BookServiceTest(
             .verify()
 
         verify(bookRepository).findById(book.id)
+    }
+
+    @Test
+    fun `Should retrieve all books`() {
+        given(bookRepository.findAll()).willReturn(Flux.just(book))
+
+        StepVerifier.create(bookService.getAllBooks())
+            .expectNext(book)
+            .expectComplete()
+            .verify()
     }
 }

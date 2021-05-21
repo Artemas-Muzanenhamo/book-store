@@ -3,6 +3,7 @@ package com.artemas.bookservice.service
 import com.artemas.bookservice.domain.Book
 import com.artemas.bookservice.repository.BookRepository
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
@@ -15,5 +16,9 @@ class BookService(
 
     fun getBookById(bookId: Long): Mono<Book> {
         return bookRepository.findById(bookId)
+    }
+
+    fun getAllBooks(): Flux<Book> {
+        return bookRepository.findAll()
     }
 }
