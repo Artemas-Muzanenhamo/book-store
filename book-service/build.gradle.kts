@@ -38,7 +38,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
-    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0")
+//    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.download-and-extract:2.0.0")
 }
 
 dependencyManagement {
