@@ -26,6 +26,6 @@ class BookEndpoint(
 
     @GetMapping("/books", produces = [APPLICATION_JSON_VALUE])
     fun getAllBooks(): Flux<Book> {
-        return Flux.just(Book(id = 4132, authorId = 987434, title = "The Great Expectations of Prime"))
+        return bookService.getAllBooks()
     }
 }
