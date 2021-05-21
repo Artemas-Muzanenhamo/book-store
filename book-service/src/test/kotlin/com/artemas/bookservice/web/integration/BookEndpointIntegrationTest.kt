@@ -4,13 +4,13 @@ import com.artemas.bookservice.domain.Book
 import com.artemas.bookservice.repository.BookRepository
 import com.artemas.bookservice.service.BookService
 import com.artemas.bookservice.web.BookEndpoint
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.context.annotation.Import
-import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -80,13 +80,13 @@ internal class BookEndpointIntegrationTest {
             .exchange()
             .expectStatus()
             .isOk
-            .returnResult(object : ParameterizedTypeReference<List<Book>>() {})
+            .expectBodyList(Book::class.java)
+            .returnResult()
 
-        val responseBody = result.responseBody
 
-        StepVerifier.create(responseBody)
-            .expectNext(listOf(book))
-            .expectComplete()
-            .verify()
+        assertThat(result.responseBody)
+            .isNotEmpty
+            .first()
+            .isEqualTo(book)
     }
 }
