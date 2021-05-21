@@ -4,6 +4,7 @@ import com.artemas.bookservice.domain.Book
 import com.artemas.bookservice.repository.BookRepository
 import com.artemas.bookservice.service.BookService
 import com.artemas.bookservice.web.BookEndpoint
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -51,7 +52,7 @@ internal class BookEndpointIntegrationTest {
 
     @Test
     fun `Should Retrieve A Book Given A Book Id`() {
-        bookRepository.save(book)
+        bookRepository.save(book).block()
 
         val result = webTestClient
             .get()
