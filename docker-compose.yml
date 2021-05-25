@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  book-service:
+    build: ./book-service
+    container_name: book-service
+    ports:
+      - "8080:8080"
