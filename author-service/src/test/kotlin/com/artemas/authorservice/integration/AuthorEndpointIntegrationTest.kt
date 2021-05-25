@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
-@WebFluxTest
+@WebFluxTest(AuthorEndpoint::class, AuthorHandler::class)
 class AuthorEndpointIntegrationTest {
 
     @Test
