@@ -1,12 +1,14 @@
 package com.artemas.authorservice.integration
 
 import com.artemas.authorservice.domain.Author
+import com.artemas.authorservice.service.AuthorService
 import com.artemas.authorservice.web.AuthorEndpoint
 import com.artemas.authorservice.web.AuthorHandler
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -16,6 +18,7 @@ import reactor.test.StepVerifier
 
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(AuthorEndpoint::class, AuthorHandler::class)
+@Import(AuthorService::class)
 class AuthorEndpointIntegrationTest(
     @Autowired val webTestClient: WebTestClient
 ) {
