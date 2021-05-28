@@ -73,7 +73,6 @@ class CreateAuthorPactTest {
     }
 }
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class Book(
     val id: Long,
     val authorId: Long,
