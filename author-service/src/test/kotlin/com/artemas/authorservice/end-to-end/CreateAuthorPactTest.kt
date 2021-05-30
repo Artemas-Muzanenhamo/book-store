@@ -7,6 +7,8 @@ import au.com.dius.pact.consumer.junit5.PactConsumerTestExt
 import au.com.dius.pact.consumer.junit5.PactTestFor
 import au.com.dius.pact.core.model.RequestResponsePact
 import au.com.dius.pact.core.model.annotations.Pact
+import au.com.dius.pact.core.model.annotations.PactDirectory
+import au.com.dius.pact.core.model.annotations.PactFolder
 import au.com.dius.pact.core.support.hasProperty
 import au.com.dius.pact.core.support.jsonObject
 import au.com.dius.pact.core.support.property
@@ -30,6 +32,7 @@ import java.io.IOException
 
 @ExtendWith(PactConsumerTestExt::class)
 @PactTestFor(providerName = "book-service")
+@PactDirectory("../pacts")
 class CreateAuthorPactTest {
 
     val json: PactDslJsonBody = PactDslJsonBody()
