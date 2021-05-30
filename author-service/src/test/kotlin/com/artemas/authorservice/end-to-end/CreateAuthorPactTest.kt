@@ -8,24 +8,13 @@ import au.com.dius.pact.consumer.junit5.PactTestFor
 import au.com.dius.pact.core.model.RequestResponsePact
 import au.com.dius.pact.core.model.annotations.Pact
 import au.com.dius.pact.core.model.annotations.PactDirectory
-import au.com.dius.pact.core.model.annotations.PactFolder
-import au.com.dius.pact.core.support.hasProperty
-import au.com.dius.pact.core.support.jsonObject
-import au.com.dius.pact.core.support.property
-import com.artemas.authorservice.domain.Author
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.apache.http.client.fluent.Request.Post
 import org.apache.http.entity.ContentType.APPLICATION_JSON
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.data.mongodb.core.query.isEqualTo
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import java.io.IOException
 
@@ -69,8 +58,8 @@ class CreateAuthorPactTest {
             .isEqualTo(CREATED.value())
 
         val objectMapper = jacksonObjectMapper()
-        val content = objectMapper.readValue(httpResponse.entity.content, Book::class.java)
-        assertThat(content)
+        val responseBody = objectMapper.readValue(httpResponse.entity.content, Book::class.java)
+        assertThat(responseBody)
             .isNotNull
             .isEqualTo(Book(123456789, 987654321, "The Greatest Pact Alive"))
     }
