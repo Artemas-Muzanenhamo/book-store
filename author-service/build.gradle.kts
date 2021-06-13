@@ -26,6 +26,7 @@ dependencies {
     testImplementation("au.com.dius.pact.consumer:junit5:4.1.21")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo.download-and-extract:2.0.0")
 }
 
 tasks.withType<KotlinCompile> {
